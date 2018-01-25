@@ -80,3 +80,7 @@ button{
   font-family: "Helvetica", "Arial";
   margin: 3px 2px 3px 0px;
 }
+
+.last-btn{
+  background-color: red;
+}

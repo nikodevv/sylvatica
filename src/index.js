@@ -118,26 +118,39 @@ class RowLabels extends React.Component{
 }
 
 class SpreadSheet extends React.Component{
+  'use strict'
   constructor(props){
     super(props)
     this.state = {
       statement_type: 'income',
+      active_btn: 'income',
     };
     this.handleClick = this.handleClick.bind(this)
+    this.toggle_active = this.toggle_active.bind(this)
   }
+
   handleClick(statement_type){
-    this.setState({statement_type: statement_type})
+    this.setState({
+      statement_type: statement_type,
+      active_btn: statement_type})
   }
-  
+
+  toggle_active(current_btn){
+    if(current_btn===this.state.active_btn){
+      return 'last-btn'
+    }
+    return null
+  }
+
   render(){
     return(
       <div className="outer-container">
         <div>
-          <button onClick={()=>{this.handleClick('income')}}>
+          <button className={this.toggle_active('income')} onClick={()=>{this.handleClick('income')}}>
             Income Statement
           </button>
-          <button onClick={()=>{this.handleClick('balance')}}>Balance Sheet</button>
-          <button onClick={()=>{this.handleClick('cfs')}}>Statement of Cashflow</button>
+          <button className={this.toggle_active('balance')} onClick={()=>{this.handleClick('balance')}}>Balance Sheet</button>
+          <button className={this.toggle_active('cfs')} onClick={()=>{this.handleClick('cfs')}}>Statement of Cashflow</button>
         </div>
         <div className="sheet-container">
           <RowLabels labels={this.props.row_labels} statement_type={this.state.statement_type}/>
