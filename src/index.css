@@ -1,8 +1,25 @@
 a {
   cursor: context-menu;
 }
+
+.col-container{
+
+}
+
+.col{
+  float:left;
+  display: flex;
+  flex-direction: column;
+}
+
 .cell{
-  padding: 2px 2px 1px 2px ;
   border: solid;
   border-width: 1px;
+  /*bottom padding must be equal to bottom
+    border width*/
+  padding: 0px 2px 1px 2px ;
+}
+/*No border on the last cell of rows*/
+.last-cell{
+  padding: 0px 2px 1px 2px ;
 }
