@@ -55,16 +55,16 @@ const data_dict = {'2017Q3': {
     2446788.0, 1276993.0, 150121.0, 0.0, 1427114.0, 0, 3545.0, 
     0.0, 0, 1901.0, 0, 257.0, -4355.0, 0.0, 0.0, -376386.0, 0.0, 0.0]}}
 
-const row_labels = Array(20)
+const row_labels = {'balance': ['Current assets', 'Cash and cash equivalents', 'Marketable securities', 'Accounts receivable, net of allowance', 'Prepaid expenses and other current assets', 'Total current assets', 'Property and equipment, net', 'Intangible assets, net', 'Goodwill', 'Other assets', 'other assets', 'Total assets', 'Current liabilities', 'Accounts payable', 'Accrued expenses and other current liabilities', 'Total current liabilities', 'Other liabilities', 'other liabilities', 'Total liabilities', 'Commitments and contingencies (Note 6)', 'Stockholders▒ equity', 'Additional paid-in capital', 'Accumulated other comprehensive income (loss)', 'Accumulated deficit', 'other equity', 'Total stockholders▒ equity', 'Total liabilities and stockholders▒ equity', 'Convertible Voting Preferred Stock, Series A, A-1, and B', 'Stockholders▒ equity0', 'Preferred stock, value', 'Convertible Non-voting Preferred Stock, Series C', 'Stockholders▒ equity1', 'Preferred stock, value2', 'Convertible Non-voting Preferred Stock, Series D, E, and F', 'Stockholders▒ equity3', 'Preferred stock, value4', 'Series FP Convertible Voting Preferred Stock', 'Stockholders▒ equity5', 'Preferred stock, value6', 'Class A Non-voting Common Stock', 'Stockholders▒ equity7', 'Common stock, value', 'Class B Common Stock', 'Stockholders▒ equity8', 'Common stock, value9', 'Class C Common Stock', 'Stockholders▒ equity10', 'Common stock, value11'], 
+'income': ['Income Statement [Abstract]', 'Revenue', 'Costs and expenses:', 'Cost of revenue', 'Research and development', 'Sales and marketing', 'General and administrative', 'Total costs and expenses', 'other operating income', 'Loss from operations', 'Interest income', 'Interest expense', 'Other income (expense), net', 'other IS items', 'Loss before income taxes', 'Income tax benefit (expense)', 'Net loss', 'Net loss per share attributable to Class A, Class B, and Class C common stockholders (Note 2):', 'Basic', 'Diluted'], 'cfs': ['other operating activities', 'Cash flows from operating activities', 'Net loss', 'Adjustments to reconcile net loss to net cash used in operating activities:', 'Depreciation and amortization', 'Stock-based compensation', 'Deferred income taxes', 'Excess inventory reserve and related asset impairment', 'Other', 'Change in operating assets and liabilities, net of effect of acquisitions:', 'Accounts receivable, net of allowance', 'Prepaid expenses and other current assets', 'Other assets', 'Accounts payable', 'Accrued expenses and other current liabilities', 'Other liabilities', 'Net cash used in operating activities', 'other investing activities', 'Cash flows from investing activities', 'Purchases of property and equipment', 'Purchases of intangible assets', 'Non-marketable investments', 'Cash paid for acquisitions, net of cash acquired', 'Issuance of notes receivable from officers/stockholders', 'Repayment of notes receivables from officers/stockholders', 'Purchases of marketable securities', 'Sales of marketable securities', 'Maturities of marketable securities', 'Change in restricted cash', 'Net cash used in investing activities', 'other financing activities', 'Cash flows from financing activities', 'Proceeds from the exercise of stock options', 'Stock repurchases from employees for tax withholdings', 'Proceeds from issuance of Class A common stock in initial public offering, net of underwriting commissions', 'Repurchase of Class B voting common stock and Series FP voting preferred stock', 'Proceeds from issuances of preferred stock, net of issuance costs', 'Borrowings from revolving credit facility', 'Principal payments on revolving credit facility', 'Payments of initial public offering issuance costs', 'Net cash provided by financing activities', 'Change in cash and cash equivalents', 'Cash and cash equivalents, beginning of period', 'Supplemental disclosures', 'Cash and cash equivalents, end of period', 'Supplemental disclosures', 'Cash paid for income taxes', 'Supplemental disclosures of non-cash activities', 'Assumed equity awards in acquisitions', 'Purchase consideration liabilities related to acquisitions', 'Repurchase of Class B voting common stock and Series FP voting preferred stock in exchange for notes receivable from officers/stockholders', 'Construction in progress related to financing lease obligations', 'Net change in accounts payable and accrued expenses and other current liabilities related to property and equipment additions', 'Class B Common Stock', 'Cash flows from operating activities0', 'Net loss1', 'Supplemental disclosures of non-cash activities2', 'Issuance of Class B common stock related to acquisitions']}
 
 // function Row(props){
 //   return (<a className="cell"></a>)
   
 // }
 class Cell extends React.Component{
-
   render(){
-    return (<a className="cell">{this.props.value}</a>)
+    return (<a className={this.props.cell_type}>{formatValue(this.props.value)}</a>)
   }
 }
 
@@ -73,8 +73,9 @@ class Col extends React.Component{
   renderCells(){
     let cells = [];
     var id = 0;
+    this.props.data_col[0] = this.props.period
     for (var key in this.props.data_col){
-      cells.push(<Cell key={id} value={this.props.data_col[key]}/>);
+      cells.push(<Cell key={id} value={this.props.data_col[key]} cell_type='datacell'/>);
       id++;
     }
     return (<div className="col">{cells}</div>)
@@ -85,17 +86,15 @@ class Col extends React.Component{
   }
 }
 
-class SpreadSheet extends React.Component{
-  //creates Rows
+class Data extends React.Component{
+  // Creates Data Columns
   renderCols(){
     let cols = [];
     var id = 0;
-    var statement_type='income'
-
     for (var col in this.props.data_dict){
       // here key is just being set as a numeric ID
-      cols.push(<Col key={id} data_col={this.props.data_dict[col][statement_type]}/>);
-      id++
+      cols.push(<Col key={id} data_col={this.props.data_dict[col][this.props.statement_type]} period={col}/>);
+      id++;
     }
     return cols
   }
@@ -105,7 +104,53 @@ class SpreadSheet extends React.Component{
     return (<div className="col-container">{this.renderCols()}</div>)}
 }
 
+class RowLabels extends React.Component{
+  renderLabels(){
+    let labels = [];
+    let id = 0;
+    for (var value in this.props.labels['income']){
+      id++;
+      labels.push(<Cell key={id} value={this.props.labels[this.props.statement_type][value]} cell_type='labelcell'/>);}
+    return labels
+  }
+  render(){
+    return(<div className="col">{this.renderLabels()}</div>)
+  }
+}
+
+class SpreadSheet extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      statement_type: 'income',
+    };
+  }
+
+  render(){
+    return(
+      <div className="outer-container">
+        <div>
+          <button>Income Statement</button>
+          <button>Balance Sheet</button>
+          <button>Statement of Cashflow</button>
+        </div>
+        <div className="sheet-container">
+          <RowLabels labels={this.props.row_labels} statement_type={this.state.statement_type}/>
+          <Data data_dict={data_dict} row_labels={row_labels} statement_type={this.state.statement_type}/>
+        </div>
+      </div>)
+  }
+}
+
 ReactDOM.render(
   <SpreadSheet data_dict={data_dict} row_labels={row_labels}/>,
   document.getElementById('root')
 );
+
+// formats value as it should appear in spreadsheet
+function formatValue(value){
+  if (typeof value === 'string') {
+    return value.length < 25 ? value : value.slice(0, 22) + '...'
+  }
+  return value===0 ? '-' : value
+}

@@ -2,24 +2,81 @@ a {
   cursor: context-menu;
 }
 
-.col-container{
-
-}
-
-.col{
-  float:left;
+.outer-container{
   display: flex;
   flex-direction: column;
 }
 
-.cell{
+.sheet-container{
+  float: left;
+  display: flex;
+  flex-direction: row;
+}
+
+.col-container{
+  display: inline-block;
   border: solid;
   border-width: 1px;
+  border-radius: 5px;
+  padding: 0px;
+}
+
+.col{
+  float: right;
+  display: flex;
+  flex-direction: column;
+}
+/* cell styling start */
+.datacell{
   /*bottom padding must be equal to bottom
     border width*/
-  padding: 0px 2px 1px 2px ;
+  font-family: "Helvetica", "Arial";
+  margin-right: -1px;
+  padding: 0px 4px 1px 10px;
+  border: solid;
+  border-width: 0px 1px 1px 0px;
+  text-align: right;
+
+
 }
-/*No border on the last cell of rows*/
-.last-cell{
-  padding: 0px 2px 1px 2px ;
+.datacell:hover{
+  -webkit-transition: box-shadow 0.1s; /* Safari */
+  transition: box-shadow 0.1s;
+  box-shadow: inset 1px 1px 3px #96b7ff, inset -1px -1px 3px #96b7ff;
+  z-index:100;
+}
+.datacell:last-child{
+  border-bottom: none;
+}
+.col:first-child .datacell:last-child{
+  border: none;
+}
+
+.col:first-child .datacell:first-child{
+  border-right: none;
+}
+
+.labelcell{
+  font-family: "Helvetica", "Arial";
+  margin-right: -1px;
+  padding: 0px 5px 1px 3px;
+  
+  border: solid;
+  border-width: 1px 1px 0px 1px;  
+}
+.labelcell:first-child{
+  border-top-right-radius: 5px;
+}
+.labelcell:last-child{
+  border-bottom-width: 1px;
+  border-bottom-right-radius: 5px;
+}
+/* cell styling end */
+
+/* menu styling */
+
+button{
+  display: inline-block;
+  font-family: "Helvetica", "Arial";
+  margin: 3px 2px 3px 0px;
 }
