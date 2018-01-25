@@ -32,7 +32,7 @@ a {
     border width*/
   font-family: "Helvetica", "Arial";
   margin-right: -1px;
-  padding: 0px 4px 1px 10px;
+  padding: 2px 4px 1px 10px;
   border: solid;
   border-width: 0px 1px 1px 0px;
   text-align: right;
@@ -42,7 +42,7 @@ a {
 .datacell:hover{
   -webkit-transition: box-shadow 0.1s; /* Safari */
   transition: box-shadow 0.1s;
-  box-shadow: inset 1px 1px 3px #96b7ff, inset -1px -1px 3px #96b7ff;
+  box-shadow: inset 2px 2px 0px #96b7ff, inset -2px -2px 0px #96b7ff;
   z-index:100;
 }
 .datacell:last-child{
@@ -59,7 +59,7 @@ a {
 .labelcell{
   font-family: "Helvetica", "Arial";
   margin-right: -1px;
-  padding: 0px 5px 1px 3px;
+  padding: 2px 5px 1px 3px;
   
   border: solid;
   border-width: 1px 1px 0px 1px;  
@@ -77,10 +77,28 @@ a {
 
 button{
   display: inline-block;
-  font-family: "Helvetica", "Arial";
   margin: 3px 2px 3px 0px;
+  border-radius: 20px;
+  border:none;
+  font-family: "Helvetica", "Arial";
+  box-shadow: none;
+  padding: 5px 10px 5px 10px;
+  background-color: #75ccff;
+  -webkit-transition: background-color; /* Safari */
+  -webkit-transition: width 0.5s; /* Safari */
+  transition: background-color 0.5s;
+  transition: width 0.2s;
+  width: 10%;
+}
+button:focus{
+  outline:0;
+  background-color: #759eff;
 }
 
 .last-btn{
-  background-color: red;
+  font-weight: bold;
+  background-color: #759eff;
+  width: 12%;
 }
+
+/* menu styling end */

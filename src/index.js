@@ -118,7 +118,6 @@ class RowLabels extends React.Component{
 }
 
 class SpreadSheet extends React.Component{
-  'use strict'
   constructor(props){
     super(props)
     this.state = {
@@ -146,11 +145,16 @@ class SpreadSheet extends React.Component{
     return(
       <div className="outer-container">
         <div>
-          <button className={this.toggle_active('income')} onClick={()=>{this.handleClick('income')}}>
+          <button className={
+            this.toggle_active('income')} onClick={()=>{this.handleClick('income')}}>
             Income Statement
           </button>
-          <button className={this.toggle_active('balance')} onClick={()=>{this.handleClick('balance')}}>Balance Sheet</button>
-          <button className={this.toggle_active('cfs')} onClick={()=>{this.handleClick('cfs')}}>Statement of Cashflow</button>
+          <button className={this.toggle_active('balance')} 
+            onClick={()=>{this.handleClick('balance')}}>Balance Sheet
+          </button>
+          <button className={this.toggle_active('cfs')} 
+            onClick={()=>{this.handleClick('cfs')}}>Statement of Cashflow
+          </button>
         </div>
         <div className="sheet-container">
           <RowLabels labels={this.props.row_labels} statement_type={this.state.statement_type}/>
