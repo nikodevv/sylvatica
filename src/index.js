@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-//data_dict corresponds to python object data_dict
+// data_dict corresponds to python object data_dict
+// the JSON object below is used for development purposes
 const data_dict = {'2017Q3': {
   'balance': [0.0, 317554.0, 1980514.0, 194971.0, 
     54692.0, 2547731.0, 143112.0, 164612.0, 612823.0, 74102.0, 0, 
