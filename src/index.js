@@ -100,7 +100,6 @@ class Data extends React.Component{
   }
 
   render(){
-    this.statement_type = 'income';
     return (<div className="col-container">{this.renderCols()}</div>)}
 }
 
@@ -108,7 +107,7 @@ class RowLabels extends React.Component{
   renderLabels(){
     let labels = [];
     let id = 0;
-    for (var value in this.props.labels['income']){
+    for (var value in this.props.labels[this.props.statement_type]){
       id++;
       labels.push(<Cell key={id} value={this.props.labels[this.props.statement_type][value]} cell_type='labelcell'/>);}
     return labels
@@ -124,15 +123,21 @@ class SpreadSheet extends React.Component{
     this.state = {
       statement_type: 'income',
     };
+    this.handleClick = this.handleClick.bind(this)
   }
-
+  handleClick(statement_type){
+    this.setState({statement_type: statement_type})
+  }
+  
   render(){
     return(
       <div className="outer-container">
         <div>
-          <button>Income Statement</button>
-          <button>Balance Sheet</button>
-          <button>Statement of Cashflow</button>
+          <button onClick={()=>{this.handleClick('income')}}>
+            Income Statement
+          </button>
+          <button onClick={()=>{this.handleClick('balance')}}>Balance Sheet</button>
+          <button onClick={()=>{this.handleClick('cfs')}}>Statement of Cashflow</button>
         </div>
         <div className="sheet-container">
           <RowLabels labels={this.props.row_labels} statement_type={this.state.statement_type}/>
